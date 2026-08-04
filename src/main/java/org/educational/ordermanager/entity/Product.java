@@ -15,8 +15,8 @@ public class Product {
     @Column(name = "nome")
     private String name;
 
-    @OneToOne
-    @JoinColumn(name = "categoria")
+    @ManyToOne
+    @JoinColumn(name = "categoria_id")
     private Category category;
 
     @Column(name = "preco")
