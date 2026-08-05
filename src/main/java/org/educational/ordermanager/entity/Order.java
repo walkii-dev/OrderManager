@@ -2,6 +2,7 @@ package org.educational.ordermanager.entity;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,15 +13,18 @@ public class Order {
     @GeneratedValue
     private long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "cliente_id")
     private Client client;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     private List<Product> productsList;
 
     @Column(name = "quantidade")
     private int quantity;
+
+    @Column(name="data_pedido")
+    private LocalDateTime orderDate;
 
     @Enumerated(EnumType.STRING)
     private OrderStatus status;
@@ -30,6 +34,7 @@ public class Order {
         this.client = client;
         this.productsList = new ArrayList<>();
         this.quantity = quantity;
+        this.orderDate = LocalDateTime.now();
         this.status = status;
     }
 
@@ -45,6 +50,14 @@ public class Order {
         return client;
     }
 
+    public List<Product> getProductsList() {
+        return productsList;
+    }
+
+    public LocalDateTime getOrderDate() {
+        return orderDate;
+    }
+
     public List<Product> getProduct() {
         return productsList;
     }
@@ -55,5 +68,17 @@ public class Order {
 
     public OrderStatus getStatus() {
         return status;
+    }
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "id=" + id +
+                ", client=" + client +
+                ", productsList=" + productsList +
+                ", quantity=" + quantity +
+                ", orderDate=" + orderDate +
+                ", status=" + status +
+                '}';
     }
 }

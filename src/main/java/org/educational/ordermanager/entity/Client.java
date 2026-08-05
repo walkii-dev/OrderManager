@@ -18,7 +18,7 @@ public class Client {
 
     private String email;
 
-    @OneToMany(mappedBy = "client")
+    @OneToMany(mappedBy = "client",fetch = FetchType.EAGER)
     private List<Order> clientOrders;
 
     @Column(name = "data_cadastro")
@@ -54,4 +54,6 @@ public class Client {
     public List<Order> getClientOrders() {
         return clientOrders;
     }
+
+
 }

@@ -15,23 +15,24 @@ public class Product {
     @Column(name = "nome")
     private String name;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "categoria_id")
     private Category category;
 
     @Column(name = "preco")
     private double price;
 
-    @ManyToMany(mappedBy = "productsList")
+    @ManyToMany(mappedBy = "productsList", fetch = FetchType.EAGER)
     private List<Order> productOrders;
 
     @Column(name = "estoque")
     private int stock;
 
-    public Product(long id, String name, double price, int stock) {
+    public Product(long id, String name, double price, Category category, int stock) {
         this.id = id;
         this.name = name;
         this.price = price;
+        this.category = category;
         this.productOrders = new ArrayList<>();
         this.stock = stock;
     }
@@ -57,5 +58,21 @@ public class Product {
 
     public int getStock() {
         return stock;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", category=" + category +
+                ", price=" + price +
+                ", productOrders=" + productOrders +
+                ", stock=" + stock +
+                '}';
     }
 }
